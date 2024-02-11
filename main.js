@@ -18,6 +18,7 @@ async function petsArea() {
         petCardClone.querySelector("h3").textContent = pet.name
         petCardClone.querySelector(".pet-description").textContent = pet.description
         petCardClone.querySelector(".pet-age").textContent = createAgeText(pet.birthYear)
+        if (!pet.photo) pet.photo = "images/fallback.jpg"
         petCardClone.querySelector(".pet-card-photo img").src = pet.photo
         console.log(pet.name)
         petCardClone.querySelector(".pet-card-photo img").alt = `A ${pet.species} named ${pet.name}`
