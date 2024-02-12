@@ -15,6 +15,9 @@ async function petsArea() {
     const petsData = await petsPromise.json()
     petsData.forEach(pet => {
         const petCardClone = template.content.cloneNode(true)
+
+        petCardClone.querySelector(".pet-card").dataset.species = pet.species
+
         petCardClone.querySelector("h3").textContent = pet.name
         petCardClone.querySelector(".pet-description").textContent = pet.description
         petCardClone.querySelector(".pet-age").textContent = createAgeText(pet.birthYear)
@@ -43,14 +46,21 @@ function createAgeText(birthYear) {
 // pet filter button code
 const allButtons = document.querySelectorAll(".pet-filter button")
 allButtons.forEach(el => {
-el.addEventListener("click", handleButtonClick)
+    el.addEventListener("click", handleButtonClick)
 })
 
-function handleButtonClick(event) {
+function handleButtonClick(e) {
     // remove the active class from all the buttons
-     allButtons.forEach(el => el.classList.remove("active"))
+    allButtons.forEach(el => el.classList.remove("active"))
     // add the active class to the clicked button
-event.target.classList.add("active")
+    e.target.classList.add("active")
     // filter on the name pet species
-
+    const currentFilter = e.target.dataset.filter
+    document.querySelectorAll(".pet-card").forEach(el => {
+        if (currentFilter == el.dataset.species || currentFilter == "all") {
+            el.style.display = "grid"
+        } else {
+            el.style.display = "none"
+        }
+    })
 }
